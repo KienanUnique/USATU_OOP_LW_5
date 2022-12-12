@@ -32,7 +32,7 @@ public:
     }
 
     void virtual printValues() {
-        cout << someValue1 << endl;
+        cout << "printValues: " << someValue1 << endl;
     }
 
     ~Base() {
@@ -54,14 +54,14 @@ public:
         someValue2 = newSomeValue2;
     }
 
-    Desc(Desc *obj) : Base(obj) {
+    Desc(const Desc *obj) : Base(obj) {
         cout << "Desc(Desc *obj)" << endl;
-        obj->someValue2 = someValue2;
+        someValue2 = obj->someValue2;
     }
 
-    Desc(Desc &obj) : Base(obj) {
+    Desc(const Desc &obj) : Base(obj) {
         cout << "Desc(Desc &obj)" << endl;
-        obj.someValue2 = someValue2;
+        someValue2 = obj.someValue2;
     }
 
     ~Desc() {
@@ -71,21 +71,28 @@ public:
 
 
 void test_second() {
+    cout << endl << "====================== Desc desc_1(10, 20) ======================" << endl;
     Desc desc_1(10, 20);
     desc_1.printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== Desc *desc_2 = new Desc(desc_1) ======================" << endl;
     Desc *desc_2 = new Desc(desc_1);
     desc_2->printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== Desc *desc_3 = new Desc(&desc_1) ======================" << endl;
     Desc *desc_3 = new Desc(&desc_1);
     desc_3->printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== Desc *desc_4 = new Desc(desc_2) ======================" << endl;
     Desc *desc_4 = new Desc(desc_2);
     desc_4->printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== unique_ptr<Base> unique_ptr_base_1(new Base(3)) ======================"
+         << endl;
     unique_ptr<Base> unique_ptr_base_1(new Base(3));
     unique_ptr_base_1->printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== unique_ptr_base_2 = move(unique_ptr_base_1) ======================" << endl;
     unique_ptr<Base> unique_ptr_base_2;
     unique_ptr_base_2 = move(unique_ptr_base_1);
     if (unique_ptr_base_1 != nullptr) {
@@ -94,15 +101,20 @@ void test_second() {
         cout << "Can not access to unique_ptr_base_1" << endl;
     }
     unique_ptr_base_2->printValues();
-    cout << "======================" << endl;
+
+    cout << endl << "====================== shared_ptr<Desc> shared_ptr_desc_1(new Desc(3, 2)) ======================"
+         << endl;
     shared_ptr<Desc> shared_ptr_desc_1(new Desc(3, 2));
     shared_ptr_desc_1->printValues();
-    cout << "======================" << endl;
+
+    cout << endl
+         << "====================== shared_ptr<Desc> shared_ptr_desc_2(shared_ptr_desc_1) ======================"
+         << endl;
     shared_ptr<Desc> shared_ptr_desc_2(shared_ptr_desc_1);
     shared_ptr_desc_1->printValues();
     shared_ptr_desc_2->printValues();
-    cout << "======================" << endl;
 
+    cout << endl << "====================== delete ======================" << endl;
     delete desc_2;
     delete desc_3;
     delete desc_4;
