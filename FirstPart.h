@@ -36,7 +36,7 @@ public:
     }
 
     bool IsA(const string &className) override {
-        return className == NamespaceWithClassNames::NameClassA;
+        return className == NamespaceWithClassNames::NameClassA || ClassWithNames::IsA(className);
     }
 
     void PrintHelloFromA() {
@@ -55,7 +55,7 @@ public:
     }
 
     bool IsA(const string &className) override {
-        return className == NamespaceWithClassNames::NameClassB;
+        return className == NamespaceWithClassNames::NameClassB || ClassWithNames::IsA(className);
     }
 
     void PrintByeFromB() {
@@ -112,14 +112,28 @@ void test_first() {
     cout << endl << "====================== static_cast ======================" << endl;
     ClassA *static_cast_classA = static_cast<ClassA *>(classWithNamesMassive[0]);
     ClassB *static_cast_classB = static_cast<ClassB *>(classWithNamesMassive[1]);
+    ClassA *static_cast_classB_as_classA = static_cast<ClassA *>(classWithNamesMassive[1]);
     static_cast_classA->PrintHelloFromA();
     static_cast_classB->PrintByeFromB();
+    static_cast_classB_as_classA->PrintHelloFromA();
+    cout << static_cast_classA->GetClassName() << endl;
+    cout << static_cast_classB->GetClassName() << endl;
+    cout << static_cast_classB_as_classA->GetClassName() << endl;
 
     cout << endl << "====================== dynamic_cast ======================" << endl;
     ClassA *dynamic_cast_classA = dynamic_cast<ClassA *>(classWithNamesMassive[0]);
     ClassB *dynamic_cast_classB = dynamic_cast<ClassB *>(classWithNamesMassive[1]);
+    ClassA *dynamic_cast_classB_as_classA = dynamic_cast<ClassA *>(classWithNamesMassive[1]);
     dynamic_cast_classA->PrintHelloFromA();
     dynamic_cast_classB->PrintByeFromB();
+    if (dynamic_cast_classB_as_classA == nullptr) {
+        cout << "dynamic_cast_classB_as_classA is nullptr" << endl;
+    } else {
+        dynamic_cast_classB_as_classA->PrintHelloFromA();
+        cout << dynamic_cast_classB_as_classA->GetClassName() << endl;
+    }
+    cout << dynamic_cast_classA->GetClassName() << endl;
+    cout << dynamic_cast_classB->GetClassName() << endl;
 
     cout << endl << "====================== constructors 3 ======================" << endl;
     ClassB classB1 = ClassB();
@@ -143,11 +157,11 @@ void test_first() {
     cout << endl << "====================== func3_return().GetClassName() ======================" << endl;
     cout << func3_return().GetClassName() << endl;
 
+    delete static_cast_classA;
+    delete static_cast_classB;
     delete classA;
     delete classB;
     delete classWithNames;
-    delete static_cast_classA;
-    delete static_cast_classB;
     delete dynamic_cast_classA;
     delete dynamic_cast_classB;
 }

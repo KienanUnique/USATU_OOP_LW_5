@@ -35,7 +35,7 @@ public:
         cout << "printValues: " << someValue1 << endl;
     }
 
-    ~Base() {
+    virtual ~Base() {
         cout << "~Base()" << endl;
     }
 };
@@ -64,7 +64,7 @@ public:
         someValue2 = obj.someValue2;
     }
 
-    ~Desc() {
+    ~Desc() override {
         cout << "~Desc()" << endl;
     }
 };

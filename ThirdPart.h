@@ -41,7 +41,7 @@ public:
         cout << "ClassChild()" << endl;
     }
 
-    ~ClassChild() {
+    ~ClassChild() override {
         cout << "~ClassChild()" << endl;
     }
 
@@ -49,7 +49,7 @@ public:
         cout << "ClassChild: MethodNonVirtual()" << endl;
     }
 
-    void MethodVirtual() {
+    void MethodVirtual() override {
         cout << "ClassChild: MethodVirtual()" << endl;
     }
 };
