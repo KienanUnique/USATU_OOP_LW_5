@@ -95,13 +95,15 @@ void test_first() {
     classWithNamesMassive[0] = classA;
     classWithNamesMassive[1] = classB;
 
-    cout << endl << "====================== classA->GetClassName() ======================" << endl;
+    cout << endl << "====================== classA->IsA() ======================" << endl;
     cout << classA->GetClassName() << endl;
+    cout << "Is NameClassWithNames: " << classA->IsA(NamespaceWithClassNames::NameClassWithNames) << endl;
     cout << "Is ClassA: " << classA->IsA(NamespaceWithClassNames::NameClassA) << endl;
     cout << "Is ClassB: " << classA->IsA(NamespaceWithClassNames::NameClassB) << endl;
 
-    cout << endl << "====================== classB->GetClassName() ======================" << endl;
+    cout << endl << "====================== classB->IsA() ======================" << endl;
     cout << classB->GetClassName() << endl;
+    cout << "Is NameClassWithNames: " << classB->IsA(NamespaceWithClassNames::NameClassWithNames) << endl;
     cout << "Is ClassA: " << classB->IsA(NamespaceWithClassNames::NameClassA) << endl;
     cout << "Is ClassB: " << classB->IsA(NamespaceWithClassNames::NameClassB) << endl;
 
@@ -135,14 +137,12 @@ void test_first() {
     cout << dynamic_cast_classA->GetClassName() << endl;
     cout << dynamic_cast_classB->GetClassName() << endl;
 
-    cout << endl << "====================== constructors 3 ======================" << endl;
-    ClassB classB1 = ClassB();
-    ClassWithNames *classWithNames = new ClassB();
-
     cout << endl << "====================== func1_parameter(classB1) ======================" << endl;
+    ClassB classB1 = ClassB();
     func1_parameter(classB1);
 
     cout << endl << "====================== func2_parameter(classWithNames) ======================" << endl;
+    ClassWithNames *classWithNames = new ClassB();
     func2_parameter(classWithNames);
 
     cout << endl << "====================== func3_parameter(classB1) ======================" << endl;

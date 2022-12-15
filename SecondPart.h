@@ -50,7 +50,7 @@ public:
     }
 
     Desc(int newSomeValue1, int newSomeValue2) : Base(newSomeValue1) {
-        cout << "Desc() : Base()" << endl;
+        cout << "Desc(int newSomeValue1, int newSomeValue2) : Base(newSomeValue1)" << endl;
         someValue2 = newSomeValue2;
     }
 
